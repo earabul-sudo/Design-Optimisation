@@ -1,4 +1,4 @@
-
+clear all
 %loaddata
 load lahautebornedata20172020.mat
 %Assign Rawdata as inputs,output and reference(in case of Nu)
