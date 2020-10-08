@@ -4,7 +4,7 @@ load lahautebornedata20172020.mat
 %Assign Rawdata as inputs,output and reference(in case of Nu)
 rawdata = lahautebornedata20172020;
 inputs = [rawdata.Ba_avg,rawdata.Git_avg,rawdata.Ws_avg,rawdata.Ot_avg,rawdata.Wa_c_avg,rawdata.Rm_avg,rawdata.Nu_avg];
-
+%inputs = [rawdata.Ba_avg,rawdata.DCs_avg,rawdata.Ws_avg,rawdata.Git_avg,rawdata.Dst_avg,rawdata.Rm_avg,rawdata.Nu_avg];
 %remove nonvals
 nanval = isnan(inputs);
 nanvalreduced = any(nanval(),2);

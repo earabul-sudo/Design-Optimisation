@@ -1,4 +1,4 @@
-
+%Size of the Input Matrix
 sizek  = size(cleanedinputs);
 N = sizek(1);
 k = sizek(2);
@@ -13,7 +13,6 @@ Quas_Rand = sobolset(2*k);
 A = Quas_Rand(2:N+1, 1:k);
 B = Quas_Rand(2:N+1, k+1:end);
 
-
 for i =1:size(A,2)
     At=A(:,1:i-1);
     Bt=B(:,i);
@@ -23,8 +22,7 @@ for i =1:size(A,2)
     A_Bdata(i) = {A_B};
 end
 
-% 
-%                    Estimate        SE        tStat       pValue  
+%                  Estimate        SE        tStat       pValue  
 %                    _________    ________    _______    __________
 % 
 %     (Intercept)      0.23786    0.032778     7.2567    2.8102e-12
@@ -34,54 +32,53 @@ end
 %     x4              -0.19799    0.042988    -4.6056    5.8613e-06
 %     x5              0.030022    0.037071    0.80985       0.41861
 
-
-% for j =2:N
-%     for k =1:k
-% Vxi(j,k) = (1/N) * (beta(1)*B(j,k)+ beta(2)*B(j,k) + beta(3)*B(j,k) + beta(4)*B(j,k)+ beta(5)*B(j,k))...
-%    *((beta(1)*A_Bdata{k}(j,k)+ beta(2)*A_Bdata{k}(j,k) +beta(3)*A_Bdata{k}(j,k) + beta(4)*A_Bdata{k}(j,k)+ beta(5)*A_Bdata{k}(j,k))...
-%     - (beta(1)*A(j,k)+ beta(2)*A(j,k) +beta(3)*A(j,k).*beta(4)*A(j,k)+ beta(5)*A(j,k)));
-%     end
-% end
+%Create Outputs for Generated Sobol Numbers
 
 for j =2:N
-    for k =1:k
-Aeval(j,k) = (beta(1)*A(j,k)+ beta(2)*A(j,k) +beta(3)*A(j,k)+ beta(4)*A(j,k)+ beta(5)*A(j,k));
-Beval(j,k) = (beta(1)*B(j,k)+ beta(2)*B(j,k) + beta(3)*B(j,k) + beta(4)*B(j,k)+ beta(5)*B(j,k));
-A_Beval(j,k) = beta(1)*A_Bdata{k}(j,k)+ beta(2)*A_Bdata{k}(j,k) +beta(3)*A_Bdata{k}(j,k) + beta(4)*A_Bdata{k}(j,k)+ beta(5)*A_Bdata{k}(j,k);
+    for i =1:k
+        
+Aeval(j,i) = (beta(1)*A(j,i)+ beta(2)*A(j,i) +beta(3)*A(j,i)+ beta(4)*A(j,i)+ beta(5)*A(j,i));
+Beval(j,i) = (beta(1)*B(j,i)+ beta(2)*B(j,i) + beta(3)*B(j,i) + beta(4)*B(j,i)+ beta(5)*B(j,i));
+A_Beval(j,i) = beta(1)*A_Bdata{i}(j,i)+ beta(2)*A_Bdata{i}(j,i) +beta(3)*A_Bdata{i}(j,i) + beta(4)*A_Bdata{i}(j,i)+ beta(5)*A_Bdata{i}(j,i);
+
+%Simplified Fit
+% Aeval(j,i) = 0.887599* A(j,i);
+% Beval(j,i) = 0.887599* B(j,i);
+% A_Beval(j,i) = 0.887599* A_B(j,i);
+
+    end
+end
+
+%Calculate Numerator terms
+
+for j =2:N
+    for i =1:k
+Vxi(j,i) = (1/N) * (Beval(j,i))*((A_Beval(j,i)) - (Aeval(j,i)));
     end
 end
 
 for j =2:N
-    for k =1:k
-Vxi(j,k) = (1/N) * (Beval(j,k))*((A_Beval(j,k)) - (Aeval(j,k)));
+    for i =1:k
+Exi(j,i) = (1/(2*N)) * ((Aeval(j,i)) -(A_Beval(j,i)))^2;
     end
 end
 
-for j =2:N
-    for k =1:k
-Exi(j,k) = (1/(2*N)) * ((Aeval(j,k)) -(A_Beval(j,k)))^2;
-    end
-end
-
-
-
+%Get varinace of total outputs
 varoutputs = var(scaledstandardisedoutputs);
 
+%Get First Order Effects and Total Order Effects
 Si = Vxi / varoutputs;
 Sti =  Exi / varoutputs;
 
+%Calculate only one value for Si and Sti
 Sifinal(:,1)= mean(Si(:,1));
 Sifinal(:,2)= mean(Si(:,2));
 Sifinal(:,3)= mean(Si(:,3));
 Sifinal(:,4)= mean(Si(:,4));
 Sifinal(:,5)= mean(Si(:,5))
-% 
-% mean(Sti(:,1))
+
 Stifinal(:,1)= mean(Sti(:,1));
 Stifinal(:,2)= mean(Sti(:,2));
 Stifinal(:,3)= mean(Sti(:,3));
 Stifinal(:,4)= mean(Sti(:,4));
-Stifinal(:,5)= mean(Sti(:,5))% mean(Sti(:,2))
-% mean(Sti(:,3))
-% mean(Sti(:,4))
-% mean(Sti(:,5))
+Stifinal(:,5)= mean(Sti(:,5));
