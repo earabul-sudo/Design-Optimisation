@@ -1,6 +1,6 @@
 clear all
 %Size of the supposed matrix
-sizek = [5000 5];
+sizek = [500 5];
 N = sizek(1); % Sample Size
 k = sizek(2); %Number of parameters
 
@@ -26,9 +26,9 @@ end
 for k = 1:k
     for N =1:N
         
-        Aout{k}(N) = TurbineModel_2020(A(N,:),'1',1);
-        Bout{k}(N) = TurbineModel_2020(B(N,:),'1',1);
-        A_Biout{k}(N) = TurbineModel_2020(ABi{k}(N,:),'1',1);
+        Aout{k}(N) = TurbineModel_2020(A(N,:),'2',1);
+        Bout{k}(N) = TurbineModel_2020(B(N,:),'2',1);
+        A_Biout{k}(N) = TurbineModel_2020(ABi{k}(N,:),'2',1);
         
         %First order Indices
         
@@ -38,16 +38,20 @@ for k = 1:k
         
         Exi{k}(N) = (1/2*N) * ( Aout{k}(N) - A_Biout{k}(N) )^2;
         
+        
+       
+        
     end
     
-        Si{k} = Vxi{k}/var(Vxi{k});
-        Sifinal(k) = mean(cell2mat(Si))
+        totalvar(k) = var(Vxi{k}) + var(Exi{k});
+        Si{k} = Vxi{k}/ totalvar(k);
+        Sifinal(k) = mean(cell2mat(Si));
         
-        Sti{k} = Exi{k}/var(Exi{k});
-        Stifinal(k) = mean(cell2mat(Sti))
+        Sti{k} = Exi{k}/totalvar(k);
+        Stifinal(k) = mean(cell2mat(Sti));
 end
 
 %Variance Set
 
-% disp(Sifinal)
-% disp(Stifinal)
+disp(Sifinal)
+disp(Stifinal)

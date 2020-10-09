@@ -64,11 +64,11 @@ Exi(j,i) = (1/(2*N)) * ((Aeval(j,i)) -(A_Beval(j,i)))^2;
 end
 
 %Get varinace of total outputs
-varoutputs = var(scaledstandardisedoutputs);
+varoutputs = var(Vxi) + var(Exi);
 
 %Get First Order Effects and Total Order Effects
-Si = Vxi / varoutputs;
-Sti =  Exi / varoutputs;
+Si = mean(Vxi,1) ./ varoutputs;
+Sti = mean(Exi) ./ varoutputs;
 
 %Calculate only one value for Si and Sti
 Sifinal(:,1)= mean(Si(:,1));
