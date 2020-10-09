@@ -1,3 +1,5 @@
+
+%Rearrange the inputs and outputs
 cleanedinputs = [cleanedData(:,1),cleanedData(:,2),cleanedData(:,3),cleanedData(:,4),cleanedData(:,5)];
 cleanedoutputs = cleanedData(:,6);
 
