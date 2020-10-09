@@ -10,6 +10,9 @@ Simply run these scripts in order and results should be displayed on matlab prom
 For Part 1cpart2, simply run the part1cb3 script.
 
 Please keep all the scripts in the same environment.
+Please ensure the 'lahautebornedata20172020.mat' matrix is available in your environment.
 
 
 Excel sheets for Part 1a, 1b and 1d can also be found here.
+
+Link to Github Project -> https://github.com/earabul-sudo/Design-Optimisation
