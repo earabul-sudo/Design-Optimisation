@@ -81,4 +81,4 @@ Stifinal(:,1)= mean(Sti(:,1));
 Stifinal(:,2)= mean(Sti(:,2));
 Stifinal(:,3)= mean(Sti(:,3));
 Stifinal(:,4)= mean(Sti(:,4));
-Stifinal(:,5)= mean(Sti(:,5));
+Stifinal(:,5)= mean(Sti(:,5))
