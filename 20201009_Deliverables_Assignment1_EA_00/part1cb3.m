@@ -22,13 +22,16 @@ end
 %     A_B((i-1)*N + 1: i*N, i) = B(:,i);
 % end
 
+
+%please change the model number in TurbineModel_2020 funtion to get
+%different sets of results for models
 %calculating outputs sobol sets
 for k = 1:k
     for N =1:N
         
-        Aout{k}(N) = TurbineModel_2020(A(N,:),'2',1);
-        Bout{k}(N) = TurbineModel_2020(B(N,:),'2',1);
-        A_Biout{k}(N) = TurbineModel_2020(ABi{k}(N,:),'2',1);
+        Aout{k}(N) = TurbineModel_2020(A(N,:),'1',1);
+        Bout{k}(N) = TurbineModel_2020(B(N,:),'1',1);
+        A_Biout{k}(N) = TurbineModel_2020(ABi{k}(N,:),'1',1);
         
         %First order Indices
         
