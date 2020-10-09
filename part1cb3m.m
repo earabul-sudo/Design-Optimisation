@@ -53,5 +53,5 @@ end
 
 %Variance Set
 
-disp(Sifinal)
-disp(Stifinal)
+disp(Sifinal);
+disp(Stifinal);
